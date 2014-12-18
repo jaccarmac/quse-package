@@ -1,0 +1,98 @@
+For a long time, my =init.el= file was full of lots of sections of the form
+
+#+BEGIN_EXAMPLE emacs-lisp
+  (quelpa 'my-package)
+  (use-package my-package
+    :init (initialize-my-package))
+#+END_EXAMPLE
+
+(=quelpa= is a package that downloads Emacs packages from the Internet using
+Git. =use-package= is a macro that makes loading and initializing these
+packages convenient.)
+
+Eventually I realized that the file could be simplified greatly were there a
+macro to chain the two operations together. The macro is trivial, but I wrote
+it and it is published here.
+
+The syntax of =quse-package= is virtually identical to that of
+=use-package=. The significant difference is that instead of looking for the
+specified package name locally it will build it using =quelpa= and can thus
+accept a package recipe in the same format that the =quelpa= function accepts.
+
+Without further ado, the macro itself.
+
+* Adhere to header (and footer) convention.
+
+  The convention to adhere to comes from the Emacs Lisp section of the Emacs
+  manual. The section is called "Conventional Headers for Emacs
+  Libraries". Check it out in your own Emacs.
+
+  In any case, the snippets below are the skeletion of =quse-package=.
+
+  The header of the package contains metadata and a magic comment telling the
+  packaging system where the actual code starts.
+
+  #+NAME: header
+  #+BEGIN_SRC emacs-lisp
+    ;;; quse-package.el --- Install and configure packages in one convenient macro.
+
+    ;; Copyright (C) 2015 Jacob MacDonald.
+
+    ;; Author: Jacob MacDonald <jaccarmac@gmail.com>.
+    ;; Created: 18 December 2014.
+    ;; Version: 1.0.0
+    ;; Keywords: extensions lisp
+    ;; Homepage: github.com/jaccarmac/quse-package
+    ;; Package-Requires: ((quelpa "0") (use-package "0"))
+
+    ;;; Code:
+  #+END_SRC
+
+  All the footer has to do is provide a system with a certain name and have a
+  magic comment.
+  
+  #+NAME: footer
+  #+BEGIN_SRC emacs-lisp
+    (provide 'quse-package)
+    ;;; quse-package.el ends here
+  #+END_SRC
+
+* Transform =quse-package= calls into the equivalent Emacs Lisp.
+
+  The comment on the first line is just a magic comment to load the main macro
+  when the package is loaded.
+
+  The macro determines whether or not the first argument is a list. It passes
+  the first argument to =quelpa= regardless, then passes either the first
+  argument and the =&rest= or the =car= of the first argument and the =&rest=
+  to =use-package=. It's that simple!.
+
+  #+NAME: quse-package
+  #+BEGIN_SRC emacs-lisp
+    ;;;###autoload
+    (defmacro quse-package (quelpa-form &rest use-package-forms)
+      "Download a package with quelpa and initialize it with use-package.
+    quelpa-form should be an *unquoted* name or list compatible with quelpa.
+    use-package-form should be whatever comes after the package name in a use-package call."
+      (let ((use-package-name (if (listp quelpa-form)
+                                  (car quelpa-form)
+                                quelpa-form)))
+        `(progn (quelpa (quote ,quelpa-form))
+                (use-package ,use-package-name
+                  ,@use-package-forms))))
+  #+END_SRC
+
+* Tangle source code.
+
+  All source code is placed in a directory adjacent to this file called
+  =tangled=.
+
+** =quse-package.el=
+   
+   #+BEGIN_SRC emacs-lisp :noweb no-export :mkdirp yes :tangle tangled/quse-package.el
+     <<header>>
+
+     <<quse-package>>
+
+     <<footer>>
+   #+END_SRC
