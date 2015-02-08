@@ -111,12 +111,9 @@ Without further ado, the macro itself.
 
 * Tangle source code.
 
-  All source code is placed in a directory adjacent to this file called
-  =tangled=.
-
 ** =quse-package.el=
    
-   #+BEGIN_SRC emacs-lisp :noweb no-export :mkdirp yes :tangle tangled/quse-package.el
+   #+BEGIN_SRC emacs-lisp :noweb no-export :tangle quse-package.el :padline no
      <<header>>
 
      <<quse-package>>

@@ -1,4 +1,3 @@
-
 ;;; quse-package.el --- Install and configure packages in one convenient macro.
 
 ;; Copyright (C) 2015 Jacob MacDonald.
