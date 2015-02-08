@@ -1,3 +1,6 @@
+#+TITLE: =quse-package=
+#+AUTHOR: Jacob MacDonald
+
 #+BEGIN_SRC text :tangle UNLICENSE :padline no
   This is free and unencumbered software released into the public domain.
 
