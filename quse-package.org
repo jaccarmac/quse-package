@@ -44,7 +44,11 @@ it and it is published here.
 The syntax of =quse-package= is virtually identical to that of
 =use-package=. The significant difference is that instead of looking for the
 specified package name locally it will build it using =quelpa= and can thus
-accept a package recipe in the same format that the =quelpa= function accepts.
+accept a package recipe in the same format that the =quelpa= function
+accepts. In addition, if the first parameter after the package name is the
+keyword =:upgrade=, =quse-package= will treat that parameter and the one
+succeeding it as part of the =quelpa= call. See the =quelpa= documentation for
+details on how =:upgrade= works.
 
 Without further ado, the macro itself.
 
@@ -67,7 +71,7 @@ Without further ado, the macro itself.
 
     ;; Author: Jacob MacDonald <jaccarmac@gmail.com>.
     ;; Created: 18 December 2014.
-    ;; Version: 2.1.0
+    ;; Version: 2.1.1
     ;; Keywords: extensions lisp
     ;; Homepage: github.com/jaccarmac/quse-package
     ;; Package-Requires: ((quelpa "0") (use-package "0"))
