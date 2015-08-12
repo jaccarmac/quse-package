@@ -67,7 +67,7 @@ Without further ado, the macro itself.
 
     ;; Author: Jacob MacDonald <jaccarmac@gmail.com>.
     ;; Created: 18 December 2014.
-    ;; Version: 2.0.1
+    ;; Version: 2.1.0
     ;; Keywords: extensions lisp
     ;; Homepage: github.com/jaccarmac/quse-package
     ;; Package-Requires: ((quelpa "0") (use-package "0"))
@@ -92,7 +92,10 @@ Without further ado, the macro itself.
   The macro determines whether or not the first argument is a list. It passes
   the first argument to =quelpa= regardless, then passes either the first
   argument and the =&rest= or the =car= of the first argument and the =&rest=
-  to =use-package=. It's that simple!.
+  to =use-package=. If the second parameter to the macro is the symbol
+  =:upgrade=, =quse-package= will interpret it and the next parameter to be
+  part of the =quelpa= call. Read the =quelpa= documentation to see what
+  =:upgrade= does.
 
   #+NAME: quse-package
   #+BEGIN_SRC emacs-lisp
@@ -100,11 +103,19 @@ Without further ado, the macro itself.
     (defmacro quse-package (quelpa-form &rest use-package-forms)
       "Download a package with quelpa and initialize it with use-package.
     quelpa-form should be an *unquoted* name or list compatible with quelpa.
-    use-package-form should be whatever comes after the package name in a use-package call."
-      (let ((use-package-name (if (listp quelpa-form)
+    use-package-form should be whatever comes after the package name in a
+    use-package call. If the first element of use-package-form is :upgrade, the
+    next element is used as the :upgrade parameter to the quelpa call."
+      (let* ((upgrade-form (if (and use-package-forms
+                                   (eq :upgrade (car use-package-forms)))
+                               (list (car use-package-forms)
+                                     (cadr use-package-forms))))
+            (use-package-name (if (listp quelpa-form)
                                   (car quelpa-form)
-                                quelpa-form)))
-        `(progn (quelpa (quote ,quelpa-form))
+                                quelpa-form))
+            (use-package-forms (if upgrade-form
+                                   (cddr use-package-forms))))
+        `(progn (quelpa (quote ,quelpa-form) ,@upgrade-form)
                 (use-package ,use-package-name
                   ,@use-package-forms))))
   #+END_SRC
