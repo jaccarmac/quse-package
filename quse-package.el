@@ -26,7 +26,8 @@ next element is used as the :upgrade parameter to the quelpa call."
                               (car quelpa-form)
                             quelpa-form))
         (use-package-forms (if upgrade-form
-                               (cddr use-package-forms))))
+                               (cddr use-package-forms)
+                             use-package-forms)))
     `(progn (quelpa (quote ,quelpa-form) ,@upgrade-form)
             (use-package ,use-package-name
               ,@use-package-forms))))
