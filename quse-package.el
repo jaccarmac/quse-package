@@ -34,7 +34,8 @@ the :upgrade parameter to the quelpa call."
          (use-package-forms (if upgrade-form
                                 (cddr use-package-forms)
                               use-package-forms)))
-    `(progn (quelpa (quote ,quelpa-form) ,@upgrade-form)
+    `(progn (add-to-list 'package-selected-packages ',use-package-name)
+            (quelpa (quote ,quelpa-form) ,@upgrade-form)
             (use-package ,use-package-name
               ,@use-package-forms))))
 
