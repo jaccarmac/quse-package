@@ -1,6 +1,6 @@
 ;;; quse-package.el --- Install and configure packages in one convenient macro.
 
-;; Copyright (C) 2015, 2016 Jacob MacDonald.
+;; Copyright (C) 2015, 2016, 2017 Jacob MacDonald.
 
 ;; Author: Jacob MacDonald <jaccarmac@gmail.com>.
 ;; Created: 18 December 2014.
