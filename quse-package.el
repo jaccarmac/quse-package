@@ -1,4 +1,4 @@
-;;; quse-package.el --- Install and configure packages in one convenient macro.
+;;; quse-package.el --- Install and configure packages in one convenient macro. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015, 2016, 2017 Jacob MacDonald.
 
