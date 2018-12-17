@@ -24,6 +24,7 @@ quelpa.  USE-PACKAGE-FORMS should be whatever comes after the
 package name in a ‘use-package’ call.  If the first element of
 USE-PACKAGE-FORMS is :upgrade, the next element is used as
 the :upgrade parameter to the quelpa call."
+  (declare (indent 1))
   (let* ((upgrade-form (if (and use-package-forms
                                 (eq :upgrade (car use-package-forms)))
                            (list (car use-package-forms)
