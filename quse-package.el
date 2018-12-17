@@ -4,7 +4,7 @@
 
 ;; Author: Jacob MacDonald <jaccarmac@gmail.com>.
 ;; Created: 18 December 2014.
-;; Version: 2.2.4
+;; Version: 2.2.5
 ;; Keywords: extensions lisp
 ;; Homepage: github.com/jaccarmac/quse-package
 ;; Package-Requires: ((quelpa "0") (use-package "0"))
