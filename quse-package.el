@@ -1,6 +1,6 @@
 ;;; quse-package.el --- Install and configure packages in one convenient macro. -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015, 2016, 2017 Jacob MacDonald.
+;; Copyright (C) 2014-2018 Jacob MacDonald.
 
 ;; Author: Jacob MacDonald <jaccarmac@gmail.com>.
 ;; Created: 18 December 2014.
